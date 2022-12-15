@@ -1,0 +1,22 @@
+﻿@page "/product"
+@model RazorPageInfo.Pages.Products.ProductPageModel
+@{
+    Layout = "_Layout";
+}
+
+@section Styles{
+
+}
+
+@foreach (var item in @Model.Products)
+{
+    <ul>
+        <li>@item.Id</li>
+        <li>@item.Name</li>
+    </ul>
+}
+
+
+@section Scripts{
+
+}
