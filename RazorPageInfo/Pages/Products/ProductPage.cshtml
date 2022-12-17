@@ -8,15 +8,117 @@
 
 }
 
-@foreach (var item in @Model.Products)
+@*For Razor*@
+@*<div class="col-md-6 container">
+    <form method="post" class="form-group mb-3">
+        <h3>Ürün Ekle</h3>
+        <div class="form-group mb-3">
+            <label for="productName"> Ürün Adı</label>
+            <input id="productName" type="text" class="form-control" asp-for="Product.Name" />
+        </div>
+        <div class="form-group mb-3">
+            <label for="productStock">Stok</label>
+            <input id="productStock" type="number" class="form-control" asp-for="Product.Stock" />
+        </div>
+        <div class="form-group mb-3">
+            <label for="productColor">Renk</label>
+            <input id="productColor" type="text" class="form-control" asp-for="Product.Color" />
+        </div>
+        <button id="save" class="btn btn-success" type="submit" asp-page-handler="Save">Kaydet</button>
+    </form>
+</div>*@
+@*For Razor End*@
+
+@*For Ajax*@
+<div class="col-md-6 container">
+    <form method="post" class="form-group mb-3">
+        <h3>Ürün Ekle</h3>
+        <div class="form-group mb-3">
+            <label for="productName"> Ürün Adı</label>
+            <input id="productName" type="text" class="form-control" />
+        </div>
+        <div class="form-group mb-3">
+            <label for="productStock">Stok</label>
+            <input id="productStock" type="number" class="form-control" />
+        </div>
+        <div class="form-group mb-3">
+            <label for="productColor">Renk</label>
+            <input id="productColor" type="text" class="form-control" />
+        </div>
+        <button id="save" class="btn btn-success">Kaydet</button>
+    </form>
+</div>
+@*For Ajax End*@
+
+
+@*@foreach (var item in @Model.Products)
 {
     <ul>
         <li>@item.Id</li>
         <li>@item.Name</li>
     </ul>
-}
+}*@
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Stock</th>
+            <th scope="col">Color</th>
+        </tr>
+    </thead>
+    <tbody id="table">
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <th scope="row">@item.Id</th>
+                <td>@item.Name</td>
+                <td>@item.Stock</td>
+                <td>@item.Color</td>
+            </tr>
+        }
+    </tbody>
+</table>
 
 
 @section Scripts{
 
+    <script type="text/javascript">
+        $(document).on('click', '#save', function () {
+            var selectedProductName = $("#productName").val();
+            var selectedProductStock = $("#productStock").val();
+            var selectedProductColor = $("#productColor").val();
+            $.ajax({
+                url: '/product?handler=SaveProduct',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                type: 'POST',
+                data: {
+                    name: selectedProductName,
+                    stock: selectedProductStock,
+                    color: selectedProductColor
+                },
+                headers: {
+                    RequestVerificationToken:
+                        $('input:hidden[name="__RequestVerificationToken"]').val()
+                },
+                success: function (result) {
+                    if (result.success) {
+                        console.log(result);                   
+                    }
+                    else {
+                        console.log(result);
+                    }
+                },
+                error: function (jqXHR) { // Http Status is not 200
+                },
+                complete: function (jqXHR, status) { // Whether success or error it enters here
+                    window.location.reload();
+                }
+            });
+        });
+    </script>
 }

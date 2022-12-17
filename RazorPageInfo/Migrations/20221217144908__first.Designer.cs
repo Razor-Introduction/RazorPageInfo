@@ -11,7 +11,7 @@ using RazorPageInfo.DataAccess.Context;
 namespace RazorPageInfo.Migrations
 {
     [DbContext(typeof(RazorInfoContext))]
-    [Migration("20221215194816_first_")]
+    [Migration("20221217144908__first")]
     partial class first
     {
         /// <inheritdoc />
@@ -48,6 +48,10 @@ namespace RazorPageInfo.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
