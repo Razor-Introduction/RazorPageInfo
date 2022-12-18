@@ -80,13 +80,12 @@ namespace RazorPageInfo.Pages.Products
         {
             var productList = await _productService.GetAll();
 
-            ProductList.Add(new SelectListItem() { Value = "0", Text = "--ÜRÜN SEÇ--", Selected = true });
             ProductList = productList.Select(a => new SelectListItem
             {
                 Value = (a.Id).ToString(),
                 Text = a.Name,
             }).ToList();
-            
+            ProductList.Add(new SelectListItem() { Value = "0", Text = "--ÜRÜN SEÇ--" ,Selected = true});
         }
         #endregion
     }
