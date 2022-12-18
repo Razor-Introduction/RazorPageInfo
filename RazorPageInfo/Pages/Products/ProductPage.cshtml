@@ -24,7 +24,7 @@
             <label for="productColor">Renk</label>
             <input id="productColor" type="text" class="form-control" asp-for="Product.Color" />
         </div>
-        <button id="save" class="btn btn-success" type="submit" asp-page-handler="Save">Kaydet</button>
+        <button class="btn btn-success" type="submit" asp-page-handler="Save">Kaydet</button>
     </form>
 </div>*@
 @*For Razor End*@
@@ -59,6 +59,14 @@
     </ul>
 }*@
 
+<div class="container col-md-6">
+    <div class=" form-group mb-3">
+        <label for="formrow-inputState">Ürün Listesi</label>
+        <select asp-items="Model.ProductList" class="form-control"></select>
+    </div>
+</div>
+
+<hr />
 <table class="table">
     <thead>
         <tr>
@@ -107,7 +115,7 @@
                 },
                 success: function (result) {
                     if (result.success) {
-                        console.log(result);                   
+                        console.log(result);
                     }
                     else {
                         console.log(result);

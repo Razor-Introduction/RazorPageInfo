@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using RazorPageInfo.Models;
 using RazorPageInfo.Services;
 
@@ -23,13 +24,18 @@ namespace RazorPageInfo.Pages.Products
         [BindProperty]
         public Category Category { get; set; }
         [BindProperty]
+
         public List<Category> Categories { get; set; }
+
+        [BindProperty]
+        public List<SelectListItem> ProductList { get; set; }
 
         #region Onget
         public async Task<IActionResult> OnGet()
         {
             var getProducts = await _productService.GetAll();
             Products = getProducts.OrderByDescending(x => x.Id);
+            await BindProducts();
             return Page();
         }
         #endregion
@@ -66,6 +72,21 @@ namespace RazorPageInfo.Pages.Products
             product.Color = color;
             await _productService.Add(product);
             return new JsonResult(product);
+        }
+        #endregion
+
+        #region SelectProduct
+        public async Task BindProducts()
+        {
+            var productList = await _productService.GetAll();
+
+            ProductList.Add(new SelectListItem() { Value = "0", Text = "--ÜRÜN SEÇ--", Selected = true });
+            ProductList = productList.Select(a => new SelectListItem
+            {
+                Value = (a.Id).ToString(),
+                Text = a.Name,
+            }).ToList();
+            
         }
         #endregion
     }
