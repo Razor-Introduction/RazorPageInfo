@@ -8,8 +8,16 @@
 
 }
 
+@*@foreach (var item in @Model.Products)
+{
+    <ul>
+        <li>@item.Id</li>
+        <li>@item.Name</li>
+    </ul>
+}*@
+
 @*For Razor*@
-@*<div class="col-md-6 container">
+<div class="col-md-6 container">
     <form method="post" class="form-group mb-3">
         <h3>Ürün Ekle</h3>
         <div class="form-group mb-3">
@@ -26,11 +34,11 @@
         </div>
         <button class="btn btn-success" type="submit" asp-page-handler="Save">Kaydet</button>
     </form>
-</div>*@
+</div>
 @*For Razor End*@
 
 @*For Ajax*@
-<div class="col-md-6 container">
+@*<div class="col-md-6 container">
     <form method="post" class="form-group mb-3">
         <h3>Ürün Ekle</h3>
         <div class="form-group mb-3">
@@ -48,21 +56,15 @@
         <button id="save" class="btn btn-success">Kaydet</button>
     </form>
 </div>
-@*For Ajax End*@
+*@@*For Ajax End*@
 
 
-@*@foreach (var item in @Model.Products)
-{
-    <ul>
-        <li>@item.Id</li>
-        <li>@item.Name</li>
-    </ul>
-}*@
+
 
 <div class="container col-md-6">
     <div class=" form-group mb-3">
-        <label for="formrow-inputState">Ürün Listesi</label>
-        <select asp-items="Model.ProductList" class="form-control"></select>
+        <label id="productList" for="formrow-inputState">Ürün Listesi</label>
+        <select asp-items="Model.ProductList" id="productList" class="form-control"></select>
     </div>
 </div>
 

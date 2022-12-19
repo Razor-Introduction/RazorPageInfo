@@ -23,8 +23,8 @@ namespace RazorPageInfo.Pages.Products
 
         [BindProperty]
         public Category Category { get; set; }
-        [BindProperty]
 
+        [BindProperty]
         public List<Category> Categories { get; set; }
 
         [BindProperty]
@@ -48,11 +48,11 @@ namespace RazorPageInfo.Pages.Products
         #endregion
 
         #region OnPost
-        //public async Task<IActionResult> OnPost(Product product)
-        //{
-        //    await _productService.Add(product);
-        //    return Redirect("/product");
-        //}
+        public async Task<IActionResult> OnPost(Product product)
+        {
+            await _productService.Add(product);
+            return Redirect("/product");
+        }
         #endregion
 
         #region OnPostSave
@@ -64,15 +64,15 @@ namespace RazorPageInfo.Pages.Products
         #endregion
 
         #region OnPostSaveProduct
-        public async Task<JsonResult> OnPostSaveProduct(string name, int stock, string color)
-        {
-            Product product = new();
-            product.Name = name;
-            product.Stock = stock;
-            product.Color = color;
-            await _productService.Add(product);
-            return new JsonResult(product);
-        }
+        //public async Task<JsonResult> OnPostSaveProduct(string name, int stock, string color)
+        //{
+        //    Product product = new();
+        //    product.Name = name;
+        //    product.Stock = stock;
+        //    product.Color = color;
+        //    await _productService.Add(product);
+        //    return new JsonResult(product);
+        //}
         #endregion
 
         #region SelectProduct
@@ -85,7 +85,6 @@ namespace RazorPageInfo.Pages.Products
                 Value = (a.Id).ToString(),
                 Text = a.Name,
             }).ToList();
-            ProductList.Add(new SelectListItem() { Value = "0", Text = "--ÜRÜN SEÇ--" ,Selected = true});
         }
         #endregion
     }
